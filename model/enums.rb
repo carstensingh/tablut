@@ -5,7 +5,7 @@ module Side
     DEFENDER = :defender 
 end
 
-module PiceType
+module PieceType
     ATTACKER = :attacker
     DEFENDER = :defender 
     KING =  :king 
