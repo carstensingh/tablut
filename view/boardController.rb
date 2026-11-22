@@ -1,5 +1,5 @@
-require_relative "enums"
-require_relative "game"
+require_relative "../model/enums"
+require_relative "../model/game"
 
 # Communicates with the Model: sends move, forfeit and start requests to the
 # Game, and reads the board, turn, status and result back. Applies no game rules.
@@ -22,11 +22,10 @@ class BoardController
         @game.startNewGame
     end
 
-    # Requests a move within the Model. Returns the resulting Move, or nil
-    # if the Model rejects it.
-    def move(fromRow, fromCol, toCol, toRow)
-        move = @game.makeMove(fromRow, fromCol, toRow, toCol)
-        move.isValid ? move : nil
+    # Requests a move within the Model and returns the resulting Move.
+    # move.isValid tells whether the Model accepted it.
+    def move(fromRow, fromCol, toRow, toCol)
+        @game.makeMove(fromRow, fromCol, toRow, toCol)
     end
 
     # Requests a forfeit within the Model, ending the game with the current
