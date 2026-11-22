@@ -1,3 +1,5 @@
+require_relative "../model/enums"
+
 class BoardDisplay
     SYMBOLS = { 0 => ".", 1 => "A", 2 => "D", 3 => "K" }
     PIECE_NAMES = { 1 => "Attacker", 2 => "Defender", 3 => "King" }
@@ -31,12 +33,14 @@ class BoardDisplay
     end
 
     def moveInvalid
-        puts "Invalid move. Try again. The board remains unchanged."
+        puts "Invalid move. Try again."
+        puts "The board remains unchanged."
         puts
     end
 
     def showWelcome
         puts "TABLUT"
+        puts
         puts "Two-player game"
         puts
     end
@@ -62,7 +66,8 @@ class BoardDisplay
     end
 
     def commandInvalid
-        puts "Invalid command: enter a source and destination. Example: move D1 C1"
+        puts "Invalid command: enter a source and destination."
+        puts "Example: move D1 C1"
         puts
     end
 

@@ -1,3 +1,8 @@
+require_relative "../model/enums"
+require_relative "boardDisplay"
+require_relative "boardController"
+require_relative "playerController"
+
 class GameView
   
     def startNewGame
@@ -23,12 +28,11 @@ class GameView
     def move(fromRow, fromCol, toRow, toCol)
         result_move = @boardController.move(fromRow, fromCol, toRow, toCol)
         if result_move.isValid
-            mover = @currentSide
             oldBoard = @board.map(&:dup)
             refresh
 
             @boardDisplay.moveAccepted(fromRow, fromCol, toRow, toCol)
-            captures = findCaptures(oldBoard, @board, mover)
+            captures = findCaptures(oldBoard, @board)
             captures.each do |row, col, pieceType|
                 @boardDisplay.pieceCaptured(row, col, pieceType)
             end
@@ -40,6 +44,7 @@ class GameView
 
     def forfeit
         @boardController.forfeit
+        @status = @boardController.getStatus
         refresh
         @boardDisplay.render(@board, @currentSide, @status, @result)
     end
@@ -61,16 +66,34 @@ class GameView
         @result = @boardController.getResult
     end
 
-    def findCaptures(oldBoard, newBoard, mover)
-        opponent = mover == Side::ATTACKER ? [2, 3] : [1]
+    def findCaptures(oldBoard, board)
+        movedPiece = 0
+        9.times do |row|
+            9.times do |col|
+                wasEmpty = oldBoard[row][col] == 0
+                isFilled = board[row][col] != 0
+                movedPiece = board[row][col] if wasEmpty && isFilled
+            end
+        end
+
+        if movedPiece == 1
+            opponentPieces = [2, 3]
+        else
+            opponentPieces = [1]
+        end
+
         captures = []
         9.times do |row|
             9.times do |col|
-                if opponent.include?(oldBoard[row][col]) && newBoard[row][col] == 0
-                    captures << [row, col, oldBoard[row][col]]
+                pieceBefore = oldBoard[row][col]
+                isEmptyNow = board[row][col] == 0
+
+                if opponentPieces.include?(pieceBefore) && isEmptyNow
+                    captures << [row, col, pieceBefore]
                 end
             end
         end
+
         captures
     end
 end
