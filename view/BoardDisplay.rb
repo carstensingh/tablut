@@ -10,18 +10,18 @@ class BoardDisplay
         end
         puts
         
-        if status.to_s == "ENDED"
+        if status == GameStatus::ENDED
             puts "GAME OVER"
             puts
-            if result.to_s == "ATTACKER_WIN"
+            if result == GameResult::ATTACKER_WIN
                 puts "Player 1 (Attacker) wins!"
-            elsif result.to_s == "DEFENDER_WIN"
+            elsif result == GameResult::DEFENDER_WIN
                 puts "Player 2 (Defender) wins!"
-            elsif result.to_s == "TIE"
+            elsif result == GameResult::TIE
                 puts "The game is a draw."
             end
         else
-            if currentSide.to_s == "ATTACKER"
+            if currentSide == Side::ATTACKER
                 puts "Current turn: Player 1 (Attacker)"
             else
                 puts "Current turn: Player 2 (Defender)"
