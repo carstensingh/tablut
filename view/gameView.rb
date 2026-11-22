@@ -45,7 +45,7 @@ class GameView
     def forfeit
         @boardController.forfeit
         @status = @boardController.getStatus
-        refresh
+        @result = @boardController.getResult
         @boardDisplay.render(@board, @currentSide, @status, @result)
     end
 

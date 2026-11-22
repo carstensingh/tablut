@@ -156,7 +156,7 @@ class Game
         end
 
         # Draw: a position is repeated.
-        positionKey = @board.getPositionKey
+        positionKey = "#{@board.getPositionKey} #{otherPlayer.getSide}"
         if @positionHistory.include?(positionKey)
             endGame(GameResult::TIE)
             return
